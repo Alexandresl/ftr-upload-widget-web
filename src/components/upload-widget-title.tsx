@@ -2,7 +2,7 @@ import { UploadCloud } from "lucide-react";
 
 export function UploadWidgetTitle() {
 
-  const isThereAnyPendingUpload = true
+  const isThereAnyPendingUpload = false
   const uploadGlobalPercentage = 66
 
   return (
