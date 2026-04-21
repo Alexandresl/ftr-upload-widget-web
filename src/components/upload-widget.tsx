@@ -9,18 +9,16 @@ export function UploadWidget() {
   const [isWidgetOpen, setIsWidgetOpen] = useState(false);
 
   return (
+    // Em volta de todo o componente - Collapsible.ROOT
     <Collapsible.Root onOpenChange={setIsWidgetOpen}>
       <div className="bg-zinc-900 w-[360px] rounded-xl shadow-shape overflow-hidden">
         {!isWidgetOpen && <UploadWidgetMinimizedButton />}
-
+        {/* Em volta do elemento completo - Collapsible content */}
         <Collapsible.Content>
           <UploadWidgetHeader />
-
           <div className="flex flex-col gap-4 py-3">
             <UploadWidgetDropzone />
-
             <div className="h-px bg-zinc-800 border-t border-black/50 box-content" />
-
             <UploadWidgetUploadList />
           </div>
         </Collapsible.Content>
