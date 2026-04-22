@@ -31,7 +31,7 @@ export function UploadWidget() {
             width: 420,
             height: 'auto',
             transition: {
-              type: 'spring',
+              type: 'tween',
               duration: 0.1
             }
           }
