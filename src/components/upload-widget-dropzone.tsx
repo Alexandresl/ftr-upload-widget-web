@@ -44,7 +44,7 @@ export function UploadWidgetDropzone() {
         ) : (
           <>
             <span className="text-xs">Drop your files here or </span>
-            <span className="text-sx underline">click to open pcker</span>
+            <span className="text-sx underline">click to open picker</span>
           </>
         )
         }
