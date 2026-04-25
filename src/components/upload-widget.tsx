@@ -4,19 +4,18 @@ import { UploadWidgetDropzone } from "./upload-widget-dropzone";
 import { UploadWidgetHeader } from "./upload-widget-header";
 import { UploadWidgetMinimizedButton } from "./upload-widget-minimized-button";
 import { UploadWidgetUploadList } from "./upload-widget-upload-list";
+import { usePendingUploads } from "../store/uploads";
 
 export function UploadWidget() {
-
-  const isThereAnyPendingUpload = true
-
+  const { isThereAnyPendingUploads } = usePendingUploads()
   const [isWidgetOpen, toggleWidgetOpen] = useCycle(false, true);
 
   return (
     // Em volta de todo o componente - Collapsible.ROOT
     <Collapsible.Root onOpenChange={() => toggleWidgetOpen()} asChild>
       <motion.div
-        data-progress={isThereAnyPendingUpload}
-        className="bg-zinc-900 w-[360px] rounded-xl overflow-hidden data-[state=opne]:shadow-shape border border-transparent animate-border data-[state=closed]:rounded-3xl data-[state=closed]:data-[progress=false]:shadow-shape data-[state=closed]:data-[progress=true]:[background:linear-gradient(45deg,#09090B,theme(colors.zinc.900)_50%,#09090B)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.zinc.700/.48)_80%,_theme(colors.indigo.500)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.500)_94%,_theme(colors.zinc.600/.48))_border-box]"
+        data-progress={isThereAnyPendingUploads}
+        className="bg-zinc-900 w-[360px] rounded-xl data-[state=opne]:shadow-shape border border-transparent animate-border data-[state=closed]:rounded-3xl data-[state=closed]:data-[progress=false]:shadow-shape data-[state=closed]:data-[progress=true]:[background:linear-gradient(45deg,#09090B,theme(colors.zinc.900)_50%,#09090B)_padding-box,conic-gradient(from_var(--border-angle),theme(colors.zinc.700/.48)_80%,_theme(colors.indigo.500)_86%,_theme(colors.indigo.300)_90%,_theme(colors.indigo.500)_94%,_theme(colors.zinc.600/.48))_border-box]"
         animate={isWidgetOpen ? 'open' : 'closed'}
         variants={{
           closed: {
