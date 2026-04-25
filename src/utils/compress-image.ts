@@ -50,13 +50,13 @@ export function compressImage({
 
                 if (width > heigth) {
                     if (width > maxWidth) {
-                        width = maxWidth
                         heigth *= maxWidth / width
+                        width = maxWidth
                     }
                 } else {
                     if (heigth > maxHeight) {
-                        heigth = maxHeight
                         width *= maxHeight / heigth
+                        heigth = maxHeight
                     }
                 }
 

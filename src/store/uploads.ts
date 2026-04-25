@@ -12,7 +12,9 @@ export type Upload = {
     abortController: AbortController
     status: 'progress' | 'success' | 'error' | 'canceled'
     originalSizeInBytes: number
+    compressedSizeInBytes?: number
     uploadSizeInBytes: number
+    remoteUrl?: string
 }
 
 type UploadState = {
@@ -55,12 +57,16 @@ export const useUploads = create<UploadState, [['zustand/immer', never]]>(
 
                 const CompressedFile = await compressImage({
                     file: upload.file,
-                    maxWidth: 200,
-                    maxHeight: 200,
-                    quality: 0.5
+                    maxWidth: 1000,
+                    maxHeight: 1000,
+                    quality: 0.8
                 })
 
-                await uploadFileToStorage(
+                updateUpload(uploadId, {
+                    compressedSizeInBytes: CompressedFile.size
+                })
+
+                const { url } = await uploadFileToStorage(
                     {
                         file: CompressedFile,
                         onProgress(sizeInBytes) {
@@ -75,7 +81,8 @@ export const useUploads = create<UploadState, [['zustand/immer', never]]>(
                 )
 
                 updateUpload(uploadId, {
-                    status: 'success'
+                    status: 'success',
+                    remoteUrl: url
                 })
 
 
@@ -157,8 +164,11 @@ export const usePendingUploads = () => {
         } = Array.from(store.uploads.values()).reduce(
             (acc, upload) => {
 
-                acc.total += upload.originalSizeInBytes
-                acc.uploaded += upload.uploadSizeInBytes
+                if (upload.compressedSizeInBytes) {
+                    acc.uploaded += upload.uploadSizeInBytes
+                }
+
+                acc.total += upload.compressedSizeInBytes || upload.originalSizeInBytes
 
                 return acc
             },
