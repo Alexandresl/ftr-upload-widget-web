@@ -12,6 +12,7 @@
   "dependencies": {
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-progress": "^1.1.8",
+    "axios": "^1.15.2",
     "immer": "^11.1.4",
     "lucide-react": "^1.8.0",
     "motion": "^12.38.0",
