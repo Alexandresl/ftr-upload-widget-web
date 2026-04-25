@@ -41,10 +41,12 @@ export function UploadWidgetUploadItem({
                     <span className="line-through">{formatBytes(upload.originalSizeInBytes)}</span>
                     <div className="size-1 rounded-full bg-zinc-700" />
                     <span>
-                        300KB
-                        <span className="text-green-400 ml-1">
-                            -94%
-                        </span>
+                        {formatBytes(upload.compressedSizeInBytes ?? 0)}
+                        {upload.compressedSizeInBytes && (
+                            <span className="text-green-400 ml-1">
+                                -{Math.round((upload.originalSizeInBytes - upload.compressedSizeInBytes) * 100 / upload.originalSizeInBytes)}%
+                            </span>
+                        )}
                     </span>
                     <div className="size-1 rounded-full bg-zinc-700" />
                     {upload.status === 'success' && <span>100%</span>}
@@ -71,9 +73,12 @@ export function UploadWidgetUploadItem({
                 <Button
                     disabled={upload.status !== 'success'}
                     size="icon-sm"
+                    asChild
                 >
-                    <Download className="size-4" strokeWidth={1.5} />
-                    <span className="sr-only">Download compressed image</span>
+                    <a href={upload.remoteUrl} download>
+                        <Download className="size-4" strokeWidth={1.5} />
+                        <span className="sr-only">Download compressed image</span>
+                    </a>
                 </Button>
                 <Button
                     disabled={!upload.remoteUrl}
